@@ -9,15 +9,15 @@ import SwiftUI
 
 struct Item: Identifiable {
     var id: Int
-    let itemName, location: String
+    let itemName, location, imageName: String
 }
 
 struct ContentView: View {
     
     let items: [Item] = [
-        .init(id: 0, itemName: "Sunglasses", location: "Cupboard"),
-        .init(id: 1, itemName: "Tape", location: "Drawer"),
-        .init(id: 2, itemName: "Batteries", location: "Nightstand")
+        .init(id: 0, itemName: "Sunglasses", location: "Cupboard", imageName: "zenitsu"),
+        .init(id: 1, itemName: "Tape", location: "Drawer", imageName: "Horimiya"),
+        .init(id: 2, itemName: "Batteries", location: "Nightstand", imageName: "oreki")
     ]
     
     var body: some View {
@@ -26,24 +26,33 @@ struct ContentView: View {
 //              Text("Stuff").font(.largeTitle)
                 ForEach(items) { item in
                     //item row
-                    HStack{
-                        //add item imagine into here
-                        Image("zenitsu")
-                            .resizable()
-                            .clipShape(Circle())
-                            .overlay(Circle().stroke(Color.black, lineWidth: 4))
-                            .frame(width:70, height: 70)
-                        
-                        VStack (alignment: .leading){
-                            Text(item.itemName).font(.title)
-                            Text(item.location).font(.subheadline)
-                        }.padding(.leading, 8)
-                    }
-                    .padding(.init(top: 12, leading: 0, bottom: 12, trailing:0))
+                    ItemRow(item: item)
                 }
             }
             .navigationBarTitle(Text("Here it is!"))
         }
+    }
+}
+
+//this can be moved to a different file
+struct ItemRow: View {
+    let item: Item
+    
+    var body: some View {
+        HStack {
+            //add item imagine into here
+            Image(item.imageName)
+                .resizable()
+                .clipShape(Circle())
+                .overlay(Circle().stroke(Color.black, lineWidth: 4))
+                .frame(width:70, height: 70)
+            
+            VStack (alignment: .leading){
+                Text(item.itemName).font(.title)
+                Text(item.location).font(.subheadline)
+            }.padding(.leading, 8)
+        }
+        .padding(.init(top: 12, leading: 0, bottom: 12, trailing:0))
     }
 }
 
